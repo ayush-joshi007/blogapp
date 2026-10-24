@@ -12,6 +12,8 @@ import java.util.Date;
 @Entity(name = "comments")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
