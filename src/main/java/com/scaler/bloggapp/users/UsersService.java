@@ -2,23 +2,23 @@ package com.scaler.bloggapp.users;
 
 import com.scaler.bloggapp.users.dtos.CreateUserRequest;
 import org.apache.catalina.User;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsersService {
 
     public final UsersRepository usersRepository;
+    private final ModelMapper modelMapper;
 
-    public UsersService(UsersRepository usersRepository) {
+    public UsersService(UsersRepository usersRepository, ModelMapper modelMapper) {
         this.usersRepository = usersRepository;
+        this.modelMapper = modelMapper;
     }
 
     public UserEntity createUser(CreateUserRequest req) {
-        var newUser = UserEntity.builder()
-                .username(req.getUsername())
-//                .password(req.getPassword())
-                .email(req.getEmail())
-                .build();
+        UserEntity newUser = modelMapper.map(req, UserEntity.class);
+        // todo: encrypt and save password
         return usersRepository.save(newUser);
 
     }
